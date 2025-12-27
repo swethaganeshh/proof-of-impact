@@ -41,7 +41,7 @@ export default function Navbar() {
       };
 
       if (!ethWin.ethereum) {
-        alert("QIE Wallet not detected. Please install QIE Wallet.");
+        alert("MetaMask not detected. Please install MetaMask.");
         setConnecting(false);
         return;
       }
