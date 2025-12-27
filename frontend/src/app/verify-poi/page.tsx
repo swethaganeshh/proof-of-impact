@@ -245,7 +245,8 @@ export default function VerifyPOIPage() {
       if (!address) return;
     }
 
-    if (!window.ethereum) {
+    const ethWin = window as Window & { ethereum?: unknown };
+    if (!ethWin.ethereum) {
       console.error("Ethereum provider not found");
       setIsDaoMember(false);
       return;
@@ -253,7 +254,7 @@ export default function VerifyPOIPage() {
 
     const client = createPublicClient({
       chain: qieTestnet,
-      transport: custom(window.ethereum as EthereumProvider),
+      transport: custom(ethWin.ethereum as EthereumProvider),
     });
 
     const result = await client.readContract({

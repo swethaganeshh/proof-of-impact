@@ -22,8 +22,6 @@ export default function ShowPOIPage() {
   const [invoices, setInvoices] = useState<FileList | null>(null);
   const [photos, setPhotos] = useState<FileList | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const pinataApiKey = process.env.NEXT_PUBLIC_PINATA_API_KEY || "";
-  const pinataApiSecret = process.env.NEXT_PUBLIC_PINATA_API_SECRET || "";
   const [invoiceLinks, setInvoiceLinks] = useState<string[]>([]);
   const [photoLinks, setPhotoLinks] = useState<string[]>([]);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -112,8 +110,8 @@ export default function ShowPOIPage() {
     const links: string[] = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const res = await uploadFileToPinata(file, pinataApiKey, pinataApiSecret);
-      const url = `https://gateway.pinata.cloud/ipfs/${res.IpfsHash}`;
+      const hash = await uploadFileToPinata(file);
+      const url = `https://gateway.pinata.cloud/ipfs/${hash}`;
       links.push(url);
     }
     setInvoiceLinks(links);
@@ -126,8 +124,8 @@ export default function ShowPOIPage() {
     const links: string[] = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const res = await uploadFileToPinata(file, pinataApiKey, pinataApiSecret);
-      const url = `https://gateway.pinata.cloud/ipfs/${res.IpfsHash}`;
+      const hash = await uploadFileToPinata(file);
+      const url = `https://gateway.pinata.cloud/ipfs/${hash}`;
       links.push(url);
     }
     setPhotoLinks(links);

@@ -18,9 +18,11 @@ export const publicClient = createPublicClient({
 });
 
 export const getWalletClient = () => {
-  if (!window.ethereum) throw new Error("Wallet not found");
+  const ethWin = window as Window & { ethereum?: unknown };
+  if (!ethWin.ethereum) throw new Error("Wallet not found");
   return createWalletClient({
     chain: publicClient.chain,
-    transport: custom(window.ethereum),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    transport: custom(ethWin.ethereum as any),
   });
 };
